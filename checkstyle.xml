@@ -7,7 +7,8 @@
     <!--Расширение файла должно быть java, properties, xml-->
     <property name="fileExtensions" value="java, properties, xml"/>
 
-    <!-- Checks for Size Violations.                    -->
+    <!-- Checks for Size Violations.
+                        -->
     <!-- See http://checkstyle.sf.net/config_sizes.html -->
     <module name="FileLength"/>
 
