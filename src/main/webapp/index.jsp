@@ -29,7 +29,7 @@
             </tr>
             </thead>
             <tbody>
-            <% for (Post post : Store.instOf().findAll()) { %>
+            <% for (Post post : Store.instOf().findAllPosts()) { %>
             <tr>
                 <td><%=post.getName()%>
                 <td><%=post.getDescription()%> </td>
