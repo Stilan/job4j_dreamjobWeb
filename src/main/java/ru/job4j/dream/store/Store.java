@@ -63,4 +63,8 @@ public class Store {
         return candidates.get(id);
     }
 
+    public void delete(int id) {
+        candidates.remove(id);
+    }
+
 }
