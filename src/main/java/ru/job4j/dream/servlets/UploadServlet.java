@@ -4,6 +4,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import ru.job4j.dream.Config;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.store.Store;
 
@@ -16,16 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UploadServlet  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
-        Candidate candidate = Store.instOf().findByCandidateId(id);
-        req.setAttribute("candidate", candidate);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/PhotoUpload.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/photoUpload.jsp");
         dispatcher.forward(req, resp);
     }
 
@@ -38,7 +35,7 @@ public class UploadServlet  extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(factory);
         try {
             List<FileItem> items = upload.parseRequest(req);
-            File folder = new File("/Users/aleksandrlitvinov/projects/job4j_dreamjobWeb/images");
+            File folder = new File(Config.getConfig().getProperty("path"));
             if (!folder.exists()) {
                 folder.mkdir();
             }
@@ -53,6 +50,6 @@ public class UploadServlet  extends HttpServlet {
         } catch (FileUploadException e) {
             e.printStackTrace();
         }
-        doGet(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }
