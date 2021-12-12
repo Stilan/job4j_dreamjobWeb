@@ -11,7 +11,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <h2>Upload image</h2>
+<%--для записи doPost и doGet--%>
 <form action="<c:url value='/upload'/>" method="post" enctype="multipart/form-data">
     <div class="checkbox">
         <input type="file" name="file">
