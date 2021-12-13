@@ -54,7 +54,7 @@
                                 </form>
                                 <form method="get" action="<c:url value='/upload'/>">
                                     <input type="number" hidden name="id" value="${candidate.id}" />
-                                    <input type="submit" value="Редактированть"/>
+                                    <input type="submit" value="Добавить"/>
                                 </form>
                             <td>
                                 <img src="<c:url value='/download?id=${candidate.id}'/>" width="100px" height="100px"/>
