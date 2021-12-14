@@ -5,6 +5,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import ru.job4j.dream.Config;
+import ru.job4j.dream.store.Store;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -70,6 +71,7 @@ public class UploadServlet  extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletContext servletContext = this.getServletConfig().getServletContext();
         File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
@@ -90,7 +92,8 @@ public class UploadServlet  extends HttpServlet {
             }
             for (FileItem item : items) {
                 if (!item.isFormField()) {
-                    File file = new File(folder + File.separator + item.getName());
+
+                    File file = new File(folder + File.separator + req.getParameter("id") + ".png");
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
                     }

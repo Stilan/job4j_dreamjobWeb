@@ -14,7 +14,7 @@
 
 <h2>Upload image</h2>
 <%--для записи doPost и doGet--%>
-<form action="<c:url value='/upload'/>" method="post" enctype="multipart/form-data">
+<form action="<c:url value='/upload?id=${param.id}'/>" method="post" enctype="multipart/form-data">
     <div class="checkbox">
         <input type="file" name="file">
     </div>

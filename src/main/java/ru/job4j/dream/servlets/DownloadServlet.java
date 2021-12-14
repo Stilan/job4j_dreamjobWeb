@@ -18,6 +18,7 @@ public class DownloadServlet extends HttpServlet {
         String name = req.getParameter("id");
         System.out.println(name);
         File downloadFile = null;
+
         for (File file : new File(Config.getConfig().getProperty("path")).listFiles()) {
             String[] arStr = file.getName().split("\\.");
             if (name.equals(arStr[0])) {
@@ -26,7 +27,7 @@ public class DownloadServlet extends HttpServlet {
             }
         }
         resp.setContentType("application/octet-stream");
-        resp.setHeader("Content-Disposition", "attachment; filename=\"" + downloadFile.getName() + "\"");
+        resp.setHeader("Content-Disposition", "attachment; filename=\"" + downloadFile + "\"");
         try (FileInputStream stream = new FileInputStream(downloadFile)) {
             resp.getOutputStream().write(stream.readAllBytes());
 
