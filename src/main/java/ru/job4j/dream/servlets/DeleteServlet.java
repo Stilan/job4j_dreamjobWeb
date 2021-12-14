@@ -1,6 +1,6 @@
 package ru.job4j.dream.servlets;
 
-import ru.job4j.dream.store.Store;
+import ru.job4j.dream.store.MemStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +14,8 @@ public class DeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("id");
         int id = Integer.parseInt(name);
-        Store.instOf().delete(id);
-        req.setAttribute("candidates", Store.instOf().findAllCandidates());
+        MemStore.instOf().delete(id);
+        req.setAttribute("candidates", MemStore.instOf().findAllCandidates());
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
     }
 }
