@@ -90,14 +90,20 @@ public class DbStore implements Store {
         return candidates;
     }
 
-    public void save(Post post) {
+    public void savePost(Post post) {
         if (post.getId() == 0) {
             create(post);
         } else {
             update(post);
         }
     }
-
+    public void saveCandidate(Candidate candidate) {
+        if (candidate.getId() == 0) {
+            create(candidate);
+        } else {
+            update(candidate);
+        }
+    }
     /**
      * Создание вакансии. Здесь выполняется обычный sql запрос.
      * @param post
@@ -121,6 +127,33 @@ public class DbStore implements Store {
         return post;
     }
 
+    /**
+     * Создание кондидата. Здесь выполняется обычный sql запрос.
+     * @param candidate
+     * @return
+     */
+    private Candidate create(Candidate candidate) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(nameCandidate) VALUES (?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, candidate.getName());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    candidate.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return candidate;
+    }
+
+    /**
+     * обновления вакансии
+     * @param post
+     */
     private void update(Post post) {
        try (Connection cn = pool.getConnection();
             PreparedStatement ps =  cn.prepareStatement("UPDATE post SET id = ?,namePost = ?")
@@ -131,8 +164,22 @@ public class DbStore implements Store {
            e.printStackTrace();
        }
     }
+    /**
+     * обновления кандидата
+     * @param candidate
+     */
+    private void update(Candidate candidate) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("UPDATE candidate SET id = ?,nameCandidate = ?")
+        )  {
+            ps.setInt(1, candidate.getId());
+            ps.setString(2, candidate.getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-    public Post findById(int id) {
+    public Post findByIdPost(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("SELECT * FROM post WHERE id = ?")
         ) {
@@ -146,5 +193,32 @@ public class DbStore implements Store {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Candidate findByCandidate(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM candidate WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new Candidate(it.getInt("id"), it.getString("nameCandidate"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public void delete(int id) {
+
+        try (Connection cn = pool.getConnection();
+             PreparedStatement statement =
+                     cn.prepareStatement("delete from candidate where id = ?")) {
+            statement.setInt(1, id);
+           statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
