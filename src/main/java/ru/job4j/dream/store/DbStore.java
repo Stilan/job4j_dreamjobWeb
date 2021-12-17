@@ -18,6 +18,7 @@ public class DbStore implements Store {
 
     private static final DbStore INSTANCE = new DbStore();
 
+
     private final BasicDataSource pool = new BasicDataSource();
 
     /**
@@ -156,10 +157,16 @@ public class DbStore implements Store {
      */
     private void update(Post post) {
        try (Connection cn = pool.getConnection();
-            PreparedStatement ps =  cn.prepareStatement("UPDATE post SET id = ?,namePost = ?")
+            PreparedStatement ps =  cn.prepareStatement("UPDATE post SET namePost = ? WHERE id = ?")
        )  {
-           ps.setInt(1, post.getId());
-           ps.setString(2, post.getName());
+           ps.setInt(2, post.getId());
+           ps.setString(1, post.getName());
+           ps.execute();
+           try (ResultSet id = ps.getGeneratedKeys()) {
+               if (id.next()) {
+                   post.setId(id.getInt(1));
+               }
+           }
        } catch (Exception e) {
            e.printStackTrace();
        }
@@ -170,10 +177,16 @@ public class DbStore implements Store {
      */
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("UPDATE candidate SET id = ?,nameCandidate = ?")
+             PreparedStatement ps =  cn.prepareStatement("UPDATE candidate SET nameCandidate = ? WHERE id = ?")
         )  {
-            ps.setInt(1, candidate.getId());
-            ps.setString(2, candidate.getName());
+            ps.setInt(2, candidate.getId());
+            ps.setString(1, candidate.getName());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    candidate.setId(id.getInt(1));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -224,7 +237,6 @@ public class DbStore implements Store {
 
     @Override
     public void deletePost(int id) {
-
         try (Connection cn = pool.getConnection();
              PreparedStatement statement =
                      cn.prepareStatement("delete from post where id = ?")) {

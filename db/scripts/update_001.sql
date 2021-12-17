@@ -3,11 +3,10 @@ create table if not exists post (
     namePost text
 );
 
+
 create table if not exists candidate (
     id serial primary key,
     nameCandidate text
 );
 
-SELECT * FROM post;
-
-SELECT * FROM candidate;
+select *  from post;

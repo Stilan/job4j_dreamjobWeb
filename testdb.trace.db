@@ -1,4 +1,16 @@
-2021-12-15 18:32:34 jdbc[3]: exception
+2021-12-17 18:44:11 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "DATABASECHANGELOGLOCK" не найдена
 Table "DATABASECHANGELOGLOCK" not found; SQL statement:
 SELECT COUNT(*) FROM DATABASECHANGELOGLOCK [42102-200]
+2021-12-17 19:35:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Ошибка преобразования данных при конвертации "Java Job 1"
+Data conversion error converting "Java Job 1"; SQL statement:
+UPDATE post SET namePost = (?) WHERE id = (?) [22018-200]
+2021-12-17 19:40:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Ошибка преобразования данных при конвертации "Alex2"
+Data conversion error converting "Alex2"; SQL statement:
+UPDATE candidate SET nameCandidate = ? WHERE id = ? [22018-200]
+2021-12-17 19:41:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Ошибка преобразования данных при конвертации "Alex2"
+Data conversion error converting "Alex2"; SQL statement:
+UPDATE candidate SET nameCandidate = ? WHERE id = ? [22018-200]

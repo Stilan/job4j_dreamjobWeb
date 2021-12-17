@@ -46,9 +46,25 @@ public class DbStoreTest  {
    @Test
    public void updatePost() {
        Store store = DbStore.instOf();
-       Post post = new Post(0, "Java Job");
+       Post post = new Post(0, "Java ");
        store.savePost(post);
+       post.setName("Java job4j");
+       store.savePost(post);
+       Post postInDb = store.findByIdPost(post.getId());
+       assertThat(postInDb.getName(), is("Java job4j"));
 
     }
+    @Test
+    public void updateCandidate() {
+        Store store = DbStore.instOf();
+        Candidate candidate = new Candidate(0, "Alex1");
+        store.saveCandidate(candidate);
+        candidate.setName("Alex2");
+        store.saveCandidate(candidate);
+        Candidate candidate2 = store.findByCandidate(candidate.getId());
+        assertThat(candidate2.getName(), is("Alex2"));
+
+    }
+
     
 }
