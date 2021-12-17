@@ -14,7 +14,7 @@ public class DeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("id");
         int id = Integer.parseInt(name);
-        DbStore.instOf().delete(id);
+        DbStore.instOf().deletePost(id);
         req.setAttribute("candidates", DbStore.instOf().findAllCandidates());
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
     }
