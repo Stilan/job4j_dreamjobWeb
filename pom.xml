@@ -37,11 +37,12 @@
     <properties>
       <db.url>jdbc:postgresql://127.0.0.1:5432/dreamjob</db.url>
       <db.username>postgres</db.username>
-      <db.password>password</db.password>
+      <db.password>QWE1243re</db.password>
       <db.driver>org.postgresql.Driver</db.driver>
     </properties>
   </profile>
 </profiles>
+
 
   <dependencies>
     <dependency>
@@ -87,11 +88,6 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-dbcp2</artifactId>
       <version>2.7.0</version>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
     </dependency>
   </dependencies>
 

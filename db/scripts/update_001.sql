@@ -9,4 +9,15 @@ create table if not exists candidate (
     nameCandidate text
 );
 
+create table if not exists users (
+    id serial primary key,
+    nameUser text,
+    password text,
+    email text
+);
+
+
+
+select * from candidate;
 select *  from post;
+select *  from users;

@@ -3,6 +3,7 @@ package ru.job4j.dream.store;
 import org.apache.commons.dbcp2.BasicDataSource;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -246,4 +247,22 @@ public class DbStore implements Store {
             e.printStackTrace();
         }
     }
+
+    public User findByEmailUser(String email) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM users WHERE email = ?")
+        ) {
+            ps.setString(1, email);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new User(it.getInt("id"), it.getString("nameUser"), it.getString("email"), it.getString("password"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }
