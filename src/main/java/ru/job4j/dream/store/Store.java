@@ -24,4 +24,11 @@ public interface Store {
     Candidate findByCandidate(int id);
 
     User findByEmailUser(String email);
+
+    Collection<User> findAllUsers();
+
+    void saveUser(User user);
+
+    void deleteUser(int id);
+
 }

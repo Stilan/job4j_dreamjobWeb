@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -163,11 +164,6 @@ public class DbStore implements Store {
            ps.setInt(2, post.getId());
            ps.setString(1, post.getName());
            ps.execute();
-           try (ResultSet id = ps.getGeneratedKeys()) {
-               if (id.next()) {
-                   post.setId(id.getInt(1));
-               }
-           }
        } catch (Exception e) {
            e.printStackTrace();
        }
@@ -183,11 +179,6 @@ public class DbStore implements Store {
             ps.setInt(2, candidate.getId());
             ps.setString(1, candidate.getName());
             ps.execute();
-            try (ResultSet id = ps.getGeneratedKeys()) {
-                if (id.next()) {
-                    candidate.setId(id.getInt(1));
-                }
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -264,5 +255,73 @@ public class DbStore implements Store {
         return null;
     }
 
+    @Override
+    public Collection<User> findAllUsers() {
+        List<User> userList = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM users")) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    userList.add(new User(it.getInt("id"), it.getString("nameUser"), it.getString("email"), it.getString("password")));
+                }
+            }
+        } catch (SQLException th) {
+            th.printStackTrace();
+        }
+        return userList;
+    }
 
+    @Override
+    public void saveUser(User user) {
+        if (user.getId() == 0) {
+            createUser(user);
+        } else {
+            updateUser(user);
+        }
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("DELETE FROM users WHERE id = ?")) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private User createUser(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO users(nameUser,password,email) VALUES (?, ?, ?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getEmail());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    user.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    private void updateUser(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("UPDATE candidate SET  nameUser = ?, password = ?, email ? WHERE id = ?")
+        )  {
+            ps.setInt(4, user.getId());
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getEmail());
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
