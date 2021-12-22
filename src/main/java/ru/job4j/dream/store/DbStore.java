@@ -215,6 +215,7 @@ public class DbStore implements Store {
         }
         return null;
     }
+
     public void deleteCandidate(int id) {
 
         try (Connection cn = pool.getConnection();
@@ -238,8 +239,8 @@ public class DbStore implements Store {
             e.printStackTrace();
         }
     }
-
-    public User findByEmailUser(String email) {
+    @Override
+    public User findByEmail(String email) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("SELECT * FROM users WHERE email = ?")
         ) {
@@ -286,8 +287,8 @@ public class DbStore implements Store {
              PreparedStatement ps =  cn.prepareStatement("DELETE FROM users WHERE id = ?")) {
             ps.setInt(1, id);
             ps.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException th) {
+            th.printStackTrace();
         }
     }
 

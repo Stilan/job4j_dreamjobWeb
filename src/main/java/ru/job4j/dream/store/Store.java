@@ -23,7 +23,7 @@ public interface Store {
 
     Candidate findByCandidate(int id);
 
-    User findByEmailUser(String email);
+    User findByEmail(String email);
 
     Collection<User> findAllUsers();
 
