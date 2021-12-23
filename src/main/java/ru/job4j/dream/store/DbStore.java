@@ -314,7 +314,7 @@ public class DbStore implements Store {
 
     private void updateUser(User user) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("UPDATE candidate SET  nameUser = ?, password = ?, email ? WHERE id = ?")
+             PreparedStatement ps =  cn.prepareStatement("UPDATE users SET  nameUser = ?, password = ?, email = ? WHERE id = ?")
         )  {
             ps.setInt(4, user.getId());
             ps.setString(1, user.getName());
