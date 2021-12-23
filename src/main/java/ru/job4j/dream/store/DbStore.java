@@ -1,6 +1,8 @@
 package ru.job4j.dream.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
@@ -20,6 +22,7 @@ public class DbStore implements Store {
 
     private static final DbStore INSTANCE = new DbStore();
 
+    private static final Logger LOG = LogManager.getLogger(DbStore.class.getName());
 
     private final BasicDataSource pool = new BasicDataSource();
 
@@ -72,7 +75,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return posts;
     }
@@ -88,7 +91,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           LOG.error(e);
         }
         return candidates;
     }
@@ -125,7 +128,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           LOG.error(e);
         }
         return post;
     }
@@ -148,7 +151,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           LOG.error(e);
         }
         return candidate;
     }
@@ -165,7 +168,7 @@ public class DbStore implements Store {
            ps.setString(1, post.getName());
            ps.execute();
        } catch (Exception e) {
-           e.printStackTrace();
+           LOG.error(e);
        }
     }
     /**
@@ -180,7 +183,7 @@ public class DbStore implements Store {
             ps.setString(1, candidate.getName());
             ps.execute();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -195,7 +198,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return null;
     }
@@ -211,7 +214,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return null;
     }
@@ -224,7 +227,7 @@ public class DbStore implements Store {
             statement.setInt(1, id);
            statement.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -236,7 +239,7 @@ public class DbStore implements Store {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+           LOG.error(e);
         }
     }
     @Override
@@ -251,7 +254,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return null;
     }
@@ -267,7 +270,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (SQLException th) {
-            th.printStackTrace();
+           LOG.error(th);
         }
         return userList;
     }
@@ -288,7 +291,7 @@ public class DbStore implements Store {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException th) {
-            th.printStackTrace();
+            LOG.error(th);
         }
     }
 
@@ -307,7 +310,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return user;
     }
@@ -322,7 +325,7 @@ public class DbStore implements Store {
             ps.setString(3, user.getEmail());
             ps.execute();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 }
