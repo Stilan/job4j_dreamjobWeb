@@ -219,6 +219,40 @@ public class DbStore implements Store {
         return null;
     }
 
+    @Override
+    public Post findByNamePost(String name) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM post WHERE namePost = ?")
+        ) {
+            ps.setString(1, name);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new Post(it.getInt("id"), it.getString("namePost"));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    @Override
+    public Candidate findByNameCandidate(String name) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM candidate WHERE nameCandidate = ?")
+        ) {
+            ps.setString(1, name);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new Candidate(it.getInt("id"), it.getString("nameCandidate"));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
     public void deleteCandidate(int id) {
 
         try (Connection cn = pool.getConnection();
