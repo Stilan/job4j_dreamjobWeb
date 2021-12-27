@@ -7,29 +7,50 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            var valueName = $('#name').val()
+                 if (valueName === ""){
+                     alert($('#name').attr('placeholder'));
+                 }
+            var valueSurname = $('#surname').val()
+            if (valueSurname === ""){
+                alert($('#surname').attr('placeholder'));
+            }
+            var valu = $('#gender option:selected').text();
+            if (valu === "") {
+                alert($('#gender').attr('name'));
+            }
+            var valueDescription = $('#description').val()
+            if (valueDescription === ""){
+                alert($('#description').attr('placeholder'));
+            }
+        }
+    </script>
 </head>
 <body>
-
 <form>
     <div class="form-group">
-        <label for="exampleFormControlInput1">Имя</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="имя">
+        <label for="name">Имя</label>
+        <input type="email" class="form-control" id="name" placeholder="Имя">
     </div>
     <div class="form-group">
-        <label for="exampleFormControlInput2">Фамилия</label>
-        <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="Фамилия">
+        <label for="surname">Фамилия</label>
+        <input type="email" class="form-control" id="surname" placeholder="Фамилия">
     </div>
     <div class="form-group">
-    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Пол</label>
-    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-        <option value="1">М</option>
-        <option value="2">Ж</option>
+    <label class="my-1 mr-2" for="gender">Пол</label>
+    <select class="custom-select my-1 mr-sm-2" id="gender" name="Пол">
+        <option value="1"></option>
+        <option value="2">М</option>
+        <option value="3">Ж</option>
     </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlTextarea1">Описание</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="описание"></textarea>
+        <label for="description">Описание</label>
+        <textarea class="form-control" id="description" placeholder="Описание"></textarea>
     </div>
+    <button type="button" class="btn btn-default" onclick="return validate();">Submit</button>
 </form>
 
 <table class="table">
