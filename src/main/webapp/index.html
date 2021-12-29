@@ -26,6 +26,33 @@
                 alert($('#description').attr('placeholder'));
             }
         }
+
+        function addRow() {
+
+            const name = $('#name').val();
+            if (name === ""){
+                alert($('#name').attr('placeholder'));
+            }
+            const valueSurname = $('#surname').val();
+            if (valueSurname === ""){
+                alert($('#surname').attr('placeholder'));
+            }
+            const gender = $('#gender option:selected').text();
+            if (gender === "") {
+                alert($('#gender').attr('name'));
+            }
+            const valueDescription = $('#description').val()
+            if (valueDescription === ""){
+                alert($('#description').attr('placeholder'));
+            }
+
+            $('#tableId tr:last').after('<tr><td>' + name + '</td><td>'
+                + valueSurname + '</td><td>'
+                + gender + '</td><td>'
+                + valueDescription + '</td></tr>');
+
+        }
+
     </script>
 </head>
 <body>
@@ -51,38 +78,19 @@
         <textarea class="form-control" id="description" placeholder="Описание"></textarea>
     </div>
     <button type="button" class="btn btn-default" onclick="return validate();">Submit</button>
+    <button type="button" class="btn btn-default" onclick="addRow()">Add row</button>
 </form>
 
-<table class="table">
+<table class="table" id="tableId">
     <thead>
     <tr>
-        <th scope="col">№</th>
-        <th scope="col">Имя</th>
-        <th scope="col">Фамилия</th>
-        <th scope="col">Пол</th>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td>Пол</td>
+        <td>Описание</td>
     </tr>
     </thead>
-    <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>M</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>M</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>Bird</td>
-        <td>M</td>
-    </tr>
-    </tbody>
-</table>
 
+</table>
 </body>
 </html>
