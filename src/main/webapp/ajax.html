@@ -23,34 +23,47 @@
 <script>
     function sendGreeting() {
         $.ajax({
-            type: 'GET',
-            url: 'http://localhost:8080/dreamjob/greet',
-            data: 'name=' + $('#email').val(),
-            dataType: 'text'
-        }).done(function(data) {
-            text_out(data)
-        }).fail(function(err){
-            text_out(err)
+            type: 'POST',
+            url: 'http://localhost:8080/job4j_dreamjobWeb/greet',
+            data: JSON.stringify({
+                name: $('#exampleInputEmail1').val()
+            }),
+            dataType: 'json'
+        }).done(function (data) {
+            $('#emailList li:last').append(`<li>${data.name}</li>`)
+        }).fail(function (err) {
+            console.log(err);
         });
     }
-</script>
-<script>
-    function text_out(err) {
-        var p;
-        p = document.getElementById('text_change');
-        p.innerHTML = err;
-    }
+    $(document).ready(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/job4j_dreamjobWeb/greet',
+            dataType: 'json'
+        }).done(function (data) {
+            for (var email of data) {
+                $('#emailList li:last').append(`<li>${email.name}</li>`)
+            }
+        }).fail(function (err) {
+            console.log(err);
+        });
+    });
 </script>
 <body>
 <div class="container">
     <form>
-        <h2> <p id="text_change"></p></h2>
         <div class="form-group">
-            <label for="email" style="font-weight: bold">Email address</label>
-            <input type="text" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                   placeholder="Enter email">
         </div>
         <button type="button" class="btn btn-primary" onclick="sendGreeting()">Submit</button>
     </form>
+    <br>
+    Почты:
+    <ul id="emailList">
+        <li></li>
+    </ul>
 </div>
 </body>
 </html>
