@@ -4,6 +4,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.City;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 
@@ -87,13 +88,32 @@ public class DbStore implements Store {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("nameCandidate")));
+                    candidates.add(new Candidate(it.getInt("id"), it.getString("nameCandidate"),
+                            Integer.parseInt(it.getString("city_id"))));
                 }
             }
         } catch (Exception e) {
            LOG.error(e.getMessage(), e);
         }
         return candidates;
+    }
+
+    @Override
+    public Collection<City> findAllCity() {
+        List<City> cities = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM city")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    cities.add(new City(it.getInt("id"), it.getString("nameCity")));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+
+        return cities;
     }
 
     public void savePost(Post post) {
@@ -140,10 +160,11 @@ public class DbStore implements Store {
      */
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(nameCandidate) VALUES (?)",
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(nameCandidate, city_id) VALUES (?,?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
+            ps.setInt(2, candidate.getCityId());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -210,7 +231,8 @@ public class DbStore implements Store {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return new Candidate(it.getInt("id"), it.getString("nameCandidate"));
+                    return new Candidate(it.getInt("id"), it.getString("nameCandidate"),
+                            Integer.parseInt(it.getString("city_id")));
                 }
             }
         } catch (Exception e) {
@@ -244,7 +266,8 @@ public class DbStore implements Store {
             ps.setString(1, name);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return new Candidate(it.getInt("id"), it.getString("nameCandidate"));
+                    return new Candidate(it.getInt("id"), it.getString("nameCandidate"),
+                            Integer.parseInt(it.getString("city_id")));
                 }
             }
         } catch (Exception e) {

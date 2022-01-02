@@ -5,6 +5,13 @@ import java.util.Objects;
 public class Candidate {
     private int id;
     private String name;
+    private int cityId;
+
+    public Candidate(int id, String name, int cityId) {
+        this.id = id;
+        this.name = name;
+        this.cityId = cityId;
+    }
 
     public Candidate(int id, String name) {
         this.id = id;
@@ -42,5 +49,13 @@ public class Candidate {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 }
