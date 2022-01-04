@@ -11,6 +11,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 
 
 public class DbStoreTest  {
+    /**
     @Test
     public void whenCreatePost() {
         Store store = DbStore.instOf();
@@ -19,6 +20,7 @@ public class DbStoreTest  {
         Post postInDb = store.findByIdPost(post.getId());
         assertThat(postInDb.getName(), is(post.getName()));
     }
+    **/
 /**
     @Test
     public void whenCreateCandidate() {
@@ -29,6 +31,7 @@ public class DbStoreTest  {
         assertThat(candidateInDb.getName(), is(candidate.getName()));
     }
 **/
+/**
     @Test
     public void deletePost() {
         Store store = DbStore.instOf();
@@ -37,6 +40,7 @@ public class DbStoreTest  {
         store.deletePost(1);
         assertThat(store.findByIdPost(1), is(nullValue()));
     }
+    **/
     /**
     @Test
     public void deleteCandidate() {
@@ -47,6 +51,7 @@ public class DbStoreTest  {
         assertThat(store.findByCandidate(1), is(nullValue()));
     }
      **/
+    /**
    @Test
    public void updatePost() {
        Store store = DbStore.instOf();
@@ -58,6 +63,7 @@ public class DbStoreTest  {
        assertThat(postInDb.getName(), is("Java job4j"));
 
     }
+   **/
     /**
     @Test
     public void updateCandidate() {

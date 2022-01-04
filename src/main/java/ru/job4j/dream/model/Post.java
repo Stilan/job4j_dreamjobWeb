@@ -1,15 +1,23 @@
 package ru.job4j.dream.model;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Post {
     private int id;
     private String name;
+    private LocalDateTime created = LocalDateTime.now();
+
+
+    public Post(int id, String name, LocalDateTime created) {
+        this.id = id;
+        this.name = name;
+        this.created = created;
+    }
 
     public Post(int id, String name) {
         this.id = id;
         this.name = name;
-
     }
 
     public int getId() {
@@ -43,5 +51,13 @@ public class Post {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 }

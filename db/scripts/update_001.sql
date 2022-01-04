@@ -1,12 +1,14 @@
 create table if not exists post (
     id serial primary key,
-    namePost text
+    namePost text,
+    created timestamp
 );
 
 
 create table if not exists candidate (
     id serial primary key,
     nameCandidate text,
+    created timestamp,
     city_id serial references city(id)
 );
 

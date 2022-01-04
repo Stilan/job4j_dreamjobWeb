@@ -34,22 +34,26 @@
     <script>
         $(document).ready(function () {
             $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: 'http://localhost:8080/job4j_dreamjobWeb/city',
                 dataType: 'json'
             }).done(function (data) {
                 for (var city of data) {
-                    var cityOut = "<option>"+ city.nameCity + "</option>";
-                    $('#gender').append(cityOut)
+                    var r = "<option value=" + city.id + ">" + city.nameCity + "</option>";
+                    $('#citySelect').append(r)
                 }
             }).fail(function (err) {
                 console.log(err);
             });
         });
         function validate() {
-            var valueName = $('#gender').val()
+            var valueName = $('#name').val()
             if (valueName === ""){
-                alert($('#gender').attr('name'));
+                alert($('#name').attr('name'));
+            }
+            var value = $('#citySelect').val()
+            if (value === ""){
+                alert($('#citySelect').attr('name'));
             }
         }
     </script>
@@ -90,11 +94,11 @@
                 <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
+                        <input type="text" class="form-control" name="name" id="Имя" value="<%=candidate.getName()%>">
                     </div>
                     <div class="form-group">
                         <label>Город</label>
-                        <select class="form-control" id="gender"  name="city">
+                        <select class="form-control" id="citySelect" required name="city" >
                             <option></option>
                         </select>
                     </div>

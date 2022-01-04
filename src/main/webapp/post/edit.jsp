@@ -67,7 +67,8 @@
                 <form action="<%=request.getContextPath()%>/posts.do?id=<%=post.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="вакансия" id="vacancy"  value="<%=post.getName()%>">
+                        <input type="text" class="form-control" name="vacancy" id="vacancy"  value="<%=post.getName()%>">
+
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="validate()">Сохранить</button>
                 </form>
