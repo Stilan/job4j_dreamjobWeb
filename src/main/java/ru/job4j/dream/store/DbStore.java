@@ -340,6 +340,23 @@ public class DbStore implements Store {
     }
 
     @Override
+    public City findByIdCity(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM city WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new City(it.getInt("id"), it.getString("nameCity"));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    @Override
     public void saveUser(User user) {
         if (user.getId() == 0) {
             createUser(user);

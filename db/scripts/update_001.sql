@@ -1,9 +1,10 @@
-create table if not exists post (
-    id serial primary key,
-    namePost text,
-    created timestamp
-);
 
+
+
+create table if not exists city (
+     id serial primary key,
+     nameCity text
+);
 
 create table if not exists candidate (
     id serial primary key,
@@ -11,6 +12,13 @@ create table if not exists candidate (
     created timestamp,
     city_id serial references city(id)
 );
+
+create table if not exists post (
+    id serial primary key,
+    namePost text,
+    created timestamp
+);
+
 
 
 create table if not exists users (
@@ -21,10 +29,8 @@ create table if not exists users (
 );
 
 
-create table if not exists city (
-     id serial primary key,
-     nameCity text
-);
+
+
 
 
 insert into city(nameCity) values ('Москва');

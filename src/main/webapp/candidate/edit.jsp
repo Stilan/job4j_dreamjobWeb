@@ -107,6 +107,11 @@
             </div>
         </div>
     </div>
+    <div>
+        <li class="nav">
+            <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Назад</a>
+        </li>
+    </div>
 </div>
 </body>
 </html>

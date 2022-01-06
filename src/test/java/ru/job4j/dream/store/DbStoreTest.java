@@ -3,7 +3,6 @@ package ru.job4j.dream.store;
 import org.junit.Test;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
-import ru.job4j.dream.model.User;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
@@ -11,7 +10,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 
 
 public class DbStoreTest  {
-    /**
+
     @Test
     public void whenCreatePost() {
         Store store = DbStore.instOf();
@@ -20,18 +19,17 @@ public class DbStoreTest  {
         Post postInDb = store.findByIdPost(post.getId());
         assertThat(postInDb.getName(), is(post.getName()));
     }
-    **/
-/**
+
     @Test
     public void whenCreateCandidate() {
         Store store = DbStore.instOf();
-        Candidate candidate = new Candidate(0, "Alex");
+        Candidate candidate = new Candidate(0, "Alex", 1);
         store.saveCandidate(candidate);
         Candidate candidateInDb = store.findByCandidate(candidate.getId());
         assertThat(candidateInDb.getName(), is(candidate.getName()));
     }
-**/
-/**
+
+
     @Test
     public void deletePost() {
         Store store = DbStore.instOf();
@@ -40,18 +38,18 @@ public class DbStoreTest  {
         store.deletePost(1);
         assertThat(store.findByIdPost(1), is(nullValue()));
     }
-    **/
-    /**
+
+
     @Test
     public void deleteCandidate() {
         Store store = DbStore.instOf();
-        Candidate candidate = new Candidate(1, "Java");
+        Candidate candidate = new Candidate(1, "Java", 2);
         store.saveCandidate(candidate);
         store.deleteCandidate(1);
         assertThat(store.findByCandidate(1), is(nullValue()));
     }
-     **/
-    /**
+
+
    @Test
    public void updatePost() {
        Store store = DbStore.instOf();
@@ -63,12 +61,11 @@ public class DbStoreTest  {
        assertThat(postInDb.getName(), is("Java job4j"));
 
     }
-   **/
-    /**
+
     @Test
     public void updateCandidate() {
         Store store = DbStore.instOf();
-        Candidate candidate = new Candidate(0, "Alex1");
+        Candidate candidate = new Candidate(0, "Alex1", 2);
         store.saveCandidate(candidate);
         candidate.setName("Alex2");
         store.saveCandidate(candidate);
@@ -76,7 +73,4 @@ public class DbStoreTest  {
         assertThat(candidate2.getName(), is("Alex2"));
 
     }
-    **/
-
-    
 }

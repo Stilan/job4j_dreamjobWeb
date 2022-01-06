@@ -34,6 +34,8 @@ public interface Store {
 
     Collection<User> findAllUsers();
 
+    City findByIdCity(int id);
+
     void saveUser(User user);
 
     void deleteUser(int id);

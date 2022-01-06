@@ -2,6 +2,7 @@
 <%@ page import="ru.job4j.dream.store.DbStore" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="java.util.Collection" %>
+<%@ page import="ru.job4j.dream.model.City" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
@@ -49,35 +50,59 @@
                     <thead>
                     <tr>
                         <th scope="col">Названия</th>
+                        <th>Город</th>
                         <th>View</th>
+                        <th>Удалить</th>
+                        <th>Добавить фото</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${candidates}" var="candidate" >
                         <tr>
-                            <td>
+                                <td>
                                 <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
-                                <c:out value="${candidate.name}"/>
-                                <form method="post" action="<c:url value='/delete'/>">
-                                    <input type="number" hidden name="id" value="${candidate.id}" />
-                                    <input type="submit" name="delete" value="Удалить"/>
-                                </form>
-                                <form method="get" action="<c:url value='/upload'/>">
-                                    <input type="number" hidden name="id" value="${candidate.id}" />
-                                    <input type="submit" value="Добавить"/>
-                                </form>
-                            <td>
-                                <img src="<c:url value='/download?id=${candidate.id}'/>" width="100px" height="100px"/>
-                            </td>
-                            </td>
+                                <div>
+                                    <c:out value="${candidate.name}"/>
+                                </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <c:set var="cityid" value="${candidate.cityId}" scope="request"/>
+                                        <%
+                                            int id = (int) request.getAttribute("cityid");
+                                            City city = DbStore.instOf().findByIdCity(id);
+                                                 %>
+                                        <%=city.getNameCity()%>
+                                    </div>
+                                </td>
+                                <td>
+                                  <img src="<c:url value='/download?id=${candidate.id}'/>" width="100px" height="100px"/>
+                                </td>
+                                <td>
+                                    <form method="post" action="<c:url value='/delete'/>">
+                                        <input type="number" hidden name="id" value="${candidate.id}" />
+                                        <input type="submit" name="delete" value="Удалить"/>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method="get" action="<c:url value='/upload'/>">
+                                        <input type="number" hidden name="id" value="${candidate.id}" />
+                                        <input type="submit" value="Добавить"/>
+                                    </form>
+                                </td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
+    <div>
+        <li class="nav">
+            <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Назад</a>
+        </li>
     </div>
 </div>
 </body>
