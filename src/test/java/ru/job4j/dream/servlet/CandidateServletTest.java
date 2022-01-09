@@ -19,7 +19,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CandidateServletTest {
-    @Ignore
     @Test
     public void whenCreatePost() throws IOException, ServletException {
         HttpServletRequest req = mock(HttpServletRequest.class);
