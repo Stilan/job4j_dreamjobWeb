@@ -86,6 +86,7 @@
                                         <input type="submit" name="delete" value="Удалить"/>
                                     </form>
                                 </td>
+
                                 <td>
                                     <form method="get" action="<c:url value='/upload'/>">
                                         <input type="number" hidden name="id" value="${candidate.id}" />
